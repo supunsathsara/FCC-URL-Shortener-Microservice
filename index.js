@@ -37,40 +37,43 @@ app.post(
   express.urlencoded({ extended: true }),
   (req, res) => {
     let url = req.body.url;
-    dns.lookup(url.replace(/^https?:\/\//i, ''), (err, address) => {
-      if (err || !url.match(/^https?:\/\//i)) {
-        res.json({ error: 'invalid url' });
-      } else {
-        Url.findOne({ original: url }, (err, data) => {
-          if (err) {
-            res.json({ error: 'invalid url' });
-          } else if (data) {
-            res.json({ original_url: data.original, short_url: data.short });
-          } else {
-            Url.countDocuments({}, (err, count) => {
-              if (err) {
-                res.json({ error: 'error' });
-              } else {
-                let newUrl = new Url({
-                  original: url,
-                  short: count + 1,
-                });
-                newUrl.save((err, data) => {
-                  if (err) {
-                    res.json({ error: 'Internal error' });
-                  } else {
-                    res.json({
-                      original_url: data.original,
-                      short_url: data.short,
-                    });
-                  }
-                });
-              }
-            });
-          }
-        });
+    dns.lookup(
+      url.replace(/^https?:\/\//i, '').split('/')[0],
+      (err, address) => {
+        if (err || !url.match(/^https?:\/\//i)) {
+          res.json({ error: 'invalid url' });
+        } else {
+          Url.findOne({ original: url }, (err, data) => {
+            if (err) {
+              res.json({ error: 'invalid url' });
+            } else if (data) {
+              res.json({ original_url: data.original, short_url: data.short });
+            } else {
+              Url.countDocuments({}, (err, count) => {
+                if (err) {
+                  res.json({ error: 'error' });
+                } else {
+                  let newUrl = new Url({
+                    original: url,
+                    short: count + 1,
+                  });
+                  newUrl.save((err, data) => {
+                    if (err) {
+                      res.json({ error: 'Internal error' });
+                    } else {
+                      res.json({
+                        original_url: data.original,
+                        short_url: data.short,
+                      });
+                    }
+                  });
+                }
+              });
+            }
+          });
+        }
       }
-    });
+    );
   }
 );
 

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>URL Shortener Microservice | freeCodeCamp.org</title>
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://cdn.freecodecamp.org/universal/favicons/favicon-16x16.png"
+    />
+    <link href="/public/style.css" rel="stylesheet" type="text/css" />
+  </head>
+
+  <body>
+    <h1>URL Shortener Microservice</h1>
+    <main>
+      <section>
+        <form action="api/shorturl" method="POST">
+          <fieldset>
+            <legend>URL Shortener</legend>
+            <label for="url_input">URL:</label>
+            <input
+              id="url_input"
+              type="text"
+              name="url"
+              placeholder="https://www.freecodecamp.org/"
+            />
+            <input type="submit" value="POST URL" />
+          </fieldset>
+        </form>
+      </section>
+    </main>
+    <div>
+      <h2>Example Usage</h2>
+      <code>
+        
+          GET <a href="api/shorturl/1"> /api/shorturl/3
+        </a>
+      </code>
+      <h3>will redirect to</h3>
+      <code>
+        <a href="https://supunsathsara.com">
+          https://supunsathsara.com
+        </a>
+    </div>
+    <footer>
+      <hr>
+      <p>
+        By
+        <a href="https://www.supunsathsara.com">Supun Sathsara</a>
+        <br />for freeCodeCamp Back End Development and APIs Projects <br />
+      </p>
+    </footer>
+  </body>
+</html>
